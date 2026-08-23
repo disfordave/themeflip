@@ -1,6 +1,17 @@
-import { useEffect, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 
 export type Theme = "light" | "dark" | "auto";
+
+const THEME_CHANGE_EVENT = "themeflip:change";
+
+function isTheme(value: string | null): value is Theme {
+  return value === "light" || value === "dark" || value === "auto";
+}
 
 export interface ThemeConfig {
   label?: string;
@@ -38,25 +49,58 @@ export default function ThemeToggle({
   buttonClassName,
   activeButtonClassName,
 
-  addDarkClass,
+  addDarkClass = false,
 }: ThemeToggleProps) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") {
+  const subscribe = useCallback(
+    (onStoreChange: () => void) => {
+      const handleStorage = (event: StorageEvent) => {
+        if (event.key === storageKey) {
+          onStoreChange();
+        }
+      };
+
+      const handleThemeChange = () => {
+        onStoreChange();
+      };
+
+      window.addEventListener("storage", handleStorage);
+      window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+
+      return () => {
+        window.removeEventListener("storage", handleStorage);
+        window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+      };
+    },
+    [storageKey],
+  );
+
+  const getSnapshot = useCallback((): Theme => {
+    try {
+      const storedTheme = localStorage.getItem(storageKey);
+
+      return isTheme(storedTheme) ? storedTheme : defaultTheme;
+    } catch {
       return defaultTheme;
     }
+  }, [storageKey, defaultTheme]);
 
-    const storedTheme = localStorage.getItem(storageKey);
+  const getServerSnapshot = useCallback(
+    (): Theme => defaultTheme,
+    [defaultTheme],
+  );
 
-    if (
-      storedTheme === "light" ||
-      storedTheme === "dark" ||
-      storedTheme === "auto"
-    ) {
-      return storedTheme;
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+  const setTheme = (newTheme: Theme) => {
+    try {
+      localStorage.setItem(storageKey, newTheme);
+    } catch {
+      // localStorage may be unavailable
     }
 
-    return defaultTheme;
-  });
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+    onThemeChange?.(newTheme);
+  };
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -87,16 +131,6 @@ export default function ThemeToggle({
       };
     }
   }, [theme, addDarkClass]);
-
-  useEffect(() => {
-    if (theme === "auto") {
-      localStorage.removeItem(storageKey);
-    } else {
-      localStorage.setItem(storageKey, theme);
-    }
-    
-    onThemeChange?.(theme);
-  }, [theme, storageKey, onThemeChange]);
 
   const themes = [
     {
