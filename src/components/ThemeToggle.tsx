@@ -116,8 +116,6 @@ export default function ThemeToggle({
           "dark",
           effectiveTheme === "dark",
         );
-      } else {
-        document.documentElement.classList.remove("dark");
       }
     };
 
