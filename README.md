@@ -91,6 +91,7 @@ To apply the correct theme before React loads, you can optionally add this scrip
         t === "dark" ||
         (t !== "light" &&
           window.matchMedia("(prefers-color-scheme: dark)").matches);
+
       document.documentElement.classList.toggle("dark", d);
     } catch (e) {}
   })();
@@ -100,6 +101,14 @@ To apply the correct theme before React loads, you can optionally add this scrip
 This is useful when using `addDarkClass` and helps avoid a brief light-theme flash while the page loads.
 
 If you use a custom `storageKey`, replace `"theme"` in the script with the same key.
+
+## Astro
+
+When using Astro, render the toggle as a client-only React island:
+
+```Astro
+<ThemeToggle client:only="react" />
+```
 
 ## License
 
