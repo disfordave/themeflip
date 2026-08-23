@@ -19,8 +19,8 @@ export default defineConfig({
       formats: ["es"],
       fileName: "index",
     },
-    rollupOptions: {
-      external: ["react", "react-dom"],
+    rolldownOptions: {
+      external: [/^react(?:\/.*)?$/, /^react-dom(?:\/.*)?$/],
     },
   },
 });
