@@ -79,7 +79,6 @@ Available attributes include:
 - `activeButtonClassName`
 
 ## Framework notes
-
 ### Avoiding theme flicker
 
 To apply the correct theme before React loads, you can optionally add this script near the top of your `<head>`:
@@ -94,7 +93,7 @@ To apply the correct theme before React loads, you can optionally add this scrip
         (t !== "light" &&
           window.matchMedia("(prefers-color-scheme: dark)").matches);
 
-      document.documentElement.dataset.theme = d ? "dark" : "light";
+      document.documentElement.classList.toggle("dark", d);
     } catch (e) {}
   })();
 </script>
