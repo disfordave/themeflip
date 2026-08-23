@@ -78,6 +78,29 @@ Available attributes include:
 - `buttonClassName`
 - `activeButtonClassName`
 
+## Avoiding theme flicker
+
+To apply the correct theme before React loads, you can optionally add this script near the top of your `<head>`:
+
+```html
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      var d =
+        t === "dark" ||
+        (t !== "light" &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.classList.toggle("dark", d);
+    } catch (e) {}
+  })();
+</script>
+```
+
+This is useful when using `addDarkClass` and helps avoid a brief light-theme flash while the page loads.
+
+If you use a custom `storageKey`, replace `"theme"` in the script with the same key.
+
 ## License
 
 MIT
