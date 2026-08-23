@@ -1,75 +1,79 @@
-# ThemeToggle
+# themetoggle
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight React theme toggle for light, dark, and system themes.
 
-Currently, two official plugins are available:
+## Install
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install themetoggle
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Usage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```tsx
+import { ThemeToggle } from "themetoggle";
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+export default function App() {
+  return <ThemeToggle />;
+}
 ```
+
+For Tailwind dark mode:
+
+```tsx
+<ThemeToggle addDarkClass />
+```
+
+## Styling
+
+`themetoggle` is unstyled, so you can use Tailwind, vanilla CSS, CSS Modules, or any other styling system.
+
+```tsx
+<ThemeToggle
+  className="theme-toggle"
+  buttonClassName="theme-toggle-button"
+  activeButtonClassName="active"
+/>
+```
+
+## Data attributes
+
+The component exposes data attributes so you can style it without depending on a specific CSS framework.
+
+```css
+[data-theme-toggle] {
+  display: flex;
+}
+
+[data-theme-option][data-active="true"] {
+  font-weight: bold;
+}
+
+[data-theme-indicator][data-theme="dark"] {
+  transform: translateX(200%);
+}
+```
+
+Available attributes include:
+
+- `data-theme-toggle` — root element
+- `data-theme-indicator` — active-theme indicator
+- `data-theme="auto | light | dark"` — current selected theme
+- `data-theme-option="auto | light | dark"` — individual theme button
+- `data-active="true | false"` — whether a theme button is selected
+
+## Props
+
+- `defaultTheme` — `"light"`, `"dark"`, or `"auto"`
+- `storageKey` — localStorage key, defaults to `"theme"`
+- `addDarkClass` — adds/removes the `dark` class on `<html>`
+- `onThemeChange` — called when the selected theme changes
+- `auto`, `light`, `dark` — customize labels and icons
+- `className`
+- `indicatorClassName`
+- `buttonClassName`
+- `activeButtonClassName`
+
+## License
+
+MIT

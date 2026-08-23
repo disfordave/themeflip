@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "license": "MIT",
   "description": "A lightweight React theme toggle for light, dark, and system themes.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/disfordave/themetoggle.git"
+  },
   "type": "module",
   "files": [
     "dist"
