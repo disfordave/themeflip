@@ -78,7 +78,8 @@ Available attributes include:
 - `buttonClassName`
 - `activeButtonClassName`
 
-## Avoiding theme flicker
+## Framework notes
+### Avoiding theme flicker
 
 To apply the correct theme before React loads, you can optionally add this script near the top of your `<head>`:
 
@@ -102,7 +103,7 @@ This is useful when using `addDarkClass` and helps avoid a brief light-theme fla
 
 If you use a custom `storageKey`, replace `"theme"` in the script with the same key.
 
-## Astro
+### Astro
 
 When using Astro, render the toggle as a client-only React island:
 
