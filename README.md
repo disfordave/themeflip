@@ -1,4 +1,4 @@
-# themetoggle
+# themeflip
 
 A lightweight React theme toggle for light, dark, and system themes.
 
@@ -9,13 +9,13 @@ A lightweight React theme toggle for light, dark, and system themes.
 ## Install
 
 ```bash
-npm install themetoggle
+npm install themeflip
 ```
 
 ## Usage
 
 ```tsx
-import { ThemeToggle } from "themetoggle";
+import { ThemeToggle } from "themeflip";
 
 export default function App() {
   return <ThemeToggle />;
@@ -30,7 +30,7 @@ For Tailwind dark mode:
 
 ## Styling
 
-`themetoggle` is unstyled, so you can use Tailwind, vanilla CSS, CSS Modules, or any other styling system.
+`themeflip` is unstyled, so you can use Tailwind, vanilla CSS, CSS Modules, or any other styling system.
 
 ```tsx
 <ThemeToggle
