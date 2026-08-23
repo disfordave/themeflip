@@ -2,6 +2,10 @@
 
 A lightweight React theme toggle for light, dark, and system themes.
 
+## Requirements
+
+- React 18+
+
 ## Install
 
 ```bash
