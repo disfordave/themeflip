@@ -79,6 +79,7 @@ Available attributes include:
 - `activeButtonClassName`
 
 ## Framework notes
+
 ### Avoiding theme flicker
 
 To apply the correct theme before React loads, you can optionally add this script near the top of your `<head>`:
