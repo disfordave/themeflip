@@ -62,17 +62,17 @@ Available attributes include:
 
 - `data-theme-toggle` — root element
 - `data-theme-indicator` — active-theme indicator
-- `data-theme="auto | light | dark"` — current selected theme
-- `data-theme-option="auto | light | dark"` — individual theme button
+- `data-theme="system | light | dark"` — current selected theme
+- `data-theme-option="system | light | dark"` — individual theme button
 - `data-active="true | false"` — whether a theme button is selected
 
 ## Props
 
-- `defaultTheme` — `"light"`, `"dark"`, or `"auto"`
+- `defaultTheme` — `"light"`, `"dark"`, or `"system"`
 - `storageKey` — localStorage key, defaults to `"theme"`
 - `addDarkClass` — adds/removes the `dark` class on `<html>`
 - `onThemeChange` — called when the selected theme changes
-- `auto`, `light`, `dark` — customize labels and icons
+- `system`, `light`, `dark` — customize labels and icons
 - `className`
 - `indicatorClassName`
 - `buttonClassName`
@@ -111,6 +111,11 @@ When using Astro, render the toggle as a client-only React island:
 ```Astro
 <ThemeToggle client:only="react" />
 ```
+
+## Breaking changes (v0.2.0)
+
+- Changed the default theme from `"auto"` to `"system"`
+- Renamed the `auto` prop to `system` for consistency
 
 ## License
 
