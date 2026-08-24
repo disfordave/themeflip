@@ -23,7 +23,7 @@ function App() {
           <h3>Custom</h3>
           <ThemeToggle
             addDarkClass
-            auto={{ label: "System" }}
+            system={{ label: "System" }}
             light={{ label: "Day" }}
             dark={{ label: "Night" }}
             onThemeChange={(theme) => {
@@ -33,7 +33,7 @@ function App() {
           <pre>
             {`<ThemeToggle
   addDarkClass
-  auto={{ label: "System" }}
+  system={{ label: "System" }}
   light={{ label: "Day" }}
   dark={{ label: "Night" }}
   onThemeChange={(theme) => {
