@@ -5,12 +5,12 @@ import {
   type ReactNode,
 } from "react";
 
-export type Theme = "light" | "dark" | "auto";
+export type Theme = "light" | "dark" | "system";
 
 const THEME_CHANGE_EVENT = "themeflip:change";
 
 function isTheme(value: string | null): value is Theme {
-  return value === "light" || value === "dark" || value === "auto";
+  return value === "light" || value === "dark" || value === "system";
 }
 
 export interface ThemeConfig {
@@ -23,7 +23,7 @@ export interface ThemeToggleProps {
   storageKey?: string;
   onThemeChange?: (theme: Theme) => void;
 
-  auto?: ThemeConfig;
+  system?: ThemeConfig;
   light?: ThemeConfig;
   dark?: ThemeConfig;
 
@@ -36,11 +36,11 @@ export interface ThemeToggleProps {
 }
 
 export default function ThemeToggle({
-  defaultTheme = "auto",
+  defaultTheme = "system",
   storageKey = "theme",
   onThemeChange,
 
-  auto,
+  system,
   light,
   dark,
 
@@ -107,7 +107,7 @@ export default function ThemeToggle({
 
     const applyTheme = () => {
       const effectiveTheme =
-        theme === "auto" ? (mediaQuery.matches ? "dark" : "light") : theme;
+        theme === "system" ? (mediaQuery.matches ? "dark" : "light") : theme;
 
       document.documentElement.dataset.theme = effectiveTheme;
 
@@ -121,7 +121,7 @@ export default function ThemeToggle({
 
     applyTheme();
 
-    if (theme === "auto") {
+    if (theme === "system") {
       mediaQuery.addEventListener("change", applyTheme);
 
       return () => {
@@ -132,9 +132,9 @@ export default function ThemeToggle({
 
   const themes = [
     {
-      value: "auto" as const,
-      label: auto?.label ?? "Auto",
-      icon: auto?.icon ?? <>{auto?.label ?? "Auto"}</>,
+      value: "system" as const,
+      label: system?.label ?? "System",
+      icon: system?.icon ?? <>{system?.label ?? "System"}</>,
     },
     {
       value: "light" as const,
